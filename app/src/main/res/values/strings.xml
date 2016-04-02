@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">kid-timer</string>
+    <string name="action_settings">Settings</string>
+    <string name="count_entry_hint">count value</string>
+    <string name="time_entry_hint">time limit</string>
+    <string name="button_count">Count!</string>
+    <string name="title_activity_main">Kid Timer</string>
+    <string name="title_activity_display_message">Counting...</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
