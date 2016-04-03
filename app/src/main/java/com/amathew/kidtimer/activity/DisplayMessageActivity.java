@@ -12,7 +12,7 @@ import com.amathew.kidtimer.counter.Counter;
 public class DisplayMessageActivity extends AppCompatActivity {
     private static final String LOG_CAT = DisplayMessageActivity.class.getName();
 
-    private Counter counter;
+    private static Counter counter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +24,13 @@ public class DisplayMessageActivity extends AppCompatActivity {
 //        textView.setText(countExtra);
 
         ConvertResult convertResult = getCounter().startCount(countExtra, timeExtra);
-        Integer countVal = (int) convertResult.count().get();
-        Integer timeVal = (int) convertResult.time().get();
         Log.e(LOG_CAT, convertResult.toString());
-        Log.e(LOG_CAT, countVal.toString());
-        Log.e(LOG_CAT, timeVal.toString());
+        if (convertResult.valid()) {
+            Integer countVal = (int) convertResult.count().get();
+            Integer timeVal = (int) convertResult.time().get();
+            Log.e(LOG_CAT, countVal.toString());
+            Log.e(LOG_CAT, timeVal.toString());
+        }
         Log.e(LOG_CAT, "All messages" + convertResult.allMsgs());
 //        com.amathew.kidtimer.counter.countdown(countVal, timeVal);
 //        tempSc.countdown((Integer)convertResult.count().get(), (Integer)convertResult.time().get());
@@ -72,7 +74,11 @@ public class DisplayMessageActivity extends AppCompatActivity {
     }
 
     private Counter getCounter() {
-        if (counter == null) {counter = new Counter(getApplicationContext());}
+        if (counter == null) {
+            synchronized (this.getClass()) {
+                if (counter == null) counter = new Counter(getApplicationContext());
+            }
+        }
         return counter;
     }
 
